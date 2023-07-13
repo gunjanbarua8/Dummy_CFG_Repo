@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kablammo&family=Poppins:wght@300&family=Roboto+Mono:wght@100&family=Roboto:wght@100&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/d410c5e952.js" crossorigin="anonymous"></script> 
+<title>Document</title>
+</head>
+<body>
+<div class="container">
+<div class="form-box">
+    <h1 id="title">Sign Up</h1>
+        <form>
+            <div class="input-group" id="namefield">
+                <div class="input-field">
+                    <i class="fa-solid fa-user" style="color: #ffa600;"></i>
+                    <input type="text" placeholder="UserName">
+                </div>
+                <div class="input-field">
+                    <i class="fa-solid fa-envelope" style="color: #ffa600;"></i>
+                    <input type="email" placeholder="E-mail">
+                </div>
+                <div class="input-field">
+                    <i class="fa-solid fa-lock" style="color: #ffa600;"></i>
+                    <input type="password" placeholder="Password">
+                </div>
+                <p id="passsignup">Lost Password   <b><a href="#addlink">Click here!</a></b>
+                </p>
+            </div>
+            <div class="btn-field">
+               <button type="button" id="signupbtn">Sign Up</button>
+               <button type="button" class="disabled" id="signinbtn">Sign In</button>
+            </div>
+        </form>
+    
+</div>
+<script>
+    let signupbtn=document.getElementById("signupbtn");
+    let signinbtn=document.getElementById("signinbtn");
+    let namefield=document.getElementById("namefield");
+    let title=document.getElementById("title");
+    let passsignup=document.getElementById("passsignup");
+
+    signinbtn.onclick=function(){
+        namefield.style.maxHeight="0";
+      
+       title.innerHTML="Sign In";
+       signupbtn.classList.add("disabled");
+       signinbtn.classList.remove("disabled");
+    }
+    signupbtn.onclick=function(){
+        namefield.style.maxHeight="65px";
+        
+       title.innerHTML="Sign Up";
+       signupbtn.classList.remove("disabled");
+       signinbtn.classList.add("disabled");
+    }
+
+</script>
+
+</div>
+
+</body>
+</html>
