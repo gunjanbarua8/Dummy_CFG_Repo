@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Food Bank Locator</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 500px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <script>
+    function initMap() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          var latitude = position.coords.latitude;
+          var longitude = position.coords.longitude;
+
+          // Use Axios to make an HTTP GET request to the Nominatim API
+          axios
+            .get(
+              `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+            )
+            .then(function (response) {
+              var locationName = response.data.display_name;
+
+              var myLatLng = L.latLng(latitude, longitude);
+              var map = L.map("map").setView(myLatLng, 12);
+              L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                attribution:
+                  'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+                maxZoom: 18,
+              }).addTo(map);
+
+              L.marker(myLatLng)
+                .addTo(map)
+                .bindPopup(`Restaurant: ${locationName}`)
+                .openPopup();
+
+              // Add additional food bank markers here
+              var foodBankLocations = [
+                { name: "Food Bank 1", lat: 40.71, lon: -74.00 },
+                { name: "Food Bank 2", lat: 40.72, lon: -74.02 },
+                { name: "Food Bank 3", lat: 40.71, lon: -74.04 },
+              ];
+
+              foodBankLocations.forEach(function (foodBank) {
+                var foodBankLatLng = L.latLng(foodBank.lat, foodBank.lon);
+                L.marker(foodBankLatLng)
+                  .addTo(map)
+                  .bindPopup(`Food Bank: ${foodBank.name}`);
+              });
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+
+    window.addEventListener("load", initMap);
+  </script>
+</body>
+</html>
