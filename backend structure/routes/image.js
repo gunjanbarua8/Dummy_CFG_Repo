@@ -5,6 +5,9 @@ const upload = multer({ storage: storage });
 const User = require("../models/user")
 const Image = require("../models/image")
 const passport = require("passport");
+const copyPaste = require('copy-paste');
+
+
 
 router.post("/post-image", upload.array("image"), async (req, res) => {
     const user = req.session?.passport?.user;
@@ -22,7 +25,17 @@ router.post("/post-image", upload.array("image"), async (req, res) => {
 
     console.log("New", curr_user);
     await curr_user.save();
+
+    // Copy the first image URL to the clipboard
+    const firstImage = req.files[0];
+    if (firstImage) {
+        copyPaste.copy(firstImage.path, () => {
+            console.log("Image URL copied to clipboard:", firstImage.path);
+        });
+    }
+
     res.send("See console");
 });
+
 // Didnt made get image yet
 module.exports = router;
