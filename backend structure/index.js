@@ -21,11 +21,12 @@ const sessionConfig = {
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }
+app.set("view engine", "ejs");
 
 
 connectDB();
-app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
 app.use(express.json());
 app.use(require('cookie-parser')());
 app.use(session(sessionConfig))
@@ -36,6 +37,24 @@ passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
     
+
+app.get("/h" , (req,res) => {
+    const data = {
+        name : "Pram",
+        age : 20
+    }
+    res.render("dashboard" , {data})
+})
+
+
+
+
+
+
+
+
+
+
 
 
 // Serving files 
